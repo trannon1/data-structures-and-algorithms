@@ -15,7 +15,13 @@ For example, if the input is 'Welcome', the output will be:
 
 const howMuchPencil = (str) => {
   let result = [];
+  result.push(str);
   // Solution code here...
+  let n = str.length;
+  for(let i = 0; i < n; i++){
+      str = str.slice(1);
+      result.push(str);
+  }
   return result;
 };
 
@@ -29,6 +35,8 @@ For example, wordsToCharList('gregor') returns ['g','r','e','g','o','r'].
 
 const wordsToCharList = (arr) => {
   // Solution code here...
+  arr = arr.split("");
+  return arr;
 };
 
 
@@ -75,7 +83,15 @@ const gruffaloCrumble = {
 
 const listFoods = (recipe) => {
   let result = [];
+  let arr = [];
   // Solution code here...
+  for (let i = 0; i < recipe['ingredients'].length; i++){
+    arr = recipe['ingredients'][i];
+    arr = arr.slice(arr.indexOf(" ")+1);
+    arr = arr.slice(arr.indexOf(" ")+1);
+    result = result.concat(arr);
+  }
+
   return result;
 };
 
@@ -89,7 +105,14 @@ You may also use other string or array methods.
 
 const splitFoods = (recipe) => {
   let result = [];
+  let arr = [];
   // Solution code here...
+  for (let i = 0; i < recipe['ingredients'].length; i++){
+      arr = recipe['ingredients'][i];
+      arr = arr.split(" ");
+      arr.splice(0, 2);
+      result = result.concat(arr.join(" "));
+  }
   return result;
 };
 
@@ -105,7 +128,14 @@ Return a new array containing just the verbs. For example, ['Mix until evenly di
 
 const stepActions = (recipe) => {
   let result = [];
+  let arr = [];
   // Solution code here...
+  for (let i = 0; i < recipe['steps'].length; i++){
+    arr = recipe['steps'][i];
+    arr = arr.slice(0, arr.indexOf(" "));
+    result = result.concat(arr);
+  }
+
   return result;
 };
 
@@ -123,7 +153,22 @@ For example:
 ------------------------------------------------------------------------------------------------ */
 
 const removeEvenValues = (arr) => {
+  const arr2 = [];
+  let temp = 0;
   // Solution code here...
+  while (arr.length > 0){
+    if (arr[0] % 2 != 0){
+      temp = arr.shift();
+      arr2.push(temp);
+    }
+    else{
+      arr.shift();
+    }
+  }
+  // delete arr[0];
+  for (let i = arr2.length-1; i >= 0; i--){
+    arr.unshift(arr2[i]);
+  }
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -143,6 +188,15 @@ removeLastCharacters('Gregor', 9) returns ''
 
 const removeLastCharacters = (str, numberOfCharacters) => {
   // Solution code here...
+  if(numberOfCharacters > str.length){
+    return "";
+  }
+  else if(numberOfCharacters < 0){
+    return str;
+  }
+  else{
+    return str.substring(0, str.length-numberOfCharacters);
+  }
 };
 
 
@@ -155,6 +209,10 @@ Write a function named totalSumCSV that, given a string of comma-separated value
 const totalSumCSV = (str) => {
   let total = 0;
   // Solution code here...
+  str = str.split(",");
+  for(let i in str){
+    total = total + parseInt(str[i]);
+  }
   return total;
 };
 
@@ -169,6 +227,33 @@ For example, removeVowels('gregor') returns 'grgr'.
 
 const removeVowels = (str) => {
   // Solution code here...
+  let vowels = 'aeiou';
+  str = str.split("");
+  let arr = [];
+  let temp = "";
+
+  // for (let i = 0; i < str.length; i++){
+  //   if(vowels.includes(str[i])){
+  //     str.splice(i, 1);
+  //   };
+  // };
+
+  while (str.length > 0){
+    if (vowels.includes(str[0])){
+      str.shift();
+    }
+    else{
+      temp = str.shift();
+      arr.push(temp);
+    }
+  }
+  // delete arr[0];
+  for (let i = arr.length-1; i >= 0; i--){
+    str.unshift(arr[i]);
+  }
+
+  str = str.join("");
+  return str;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -183,6 +268,39 @@ Similarly, extractVowels('The quick brown fox') returns ['Th qck brwn fx', 'eioo
 
 const extractVowels = (str) => {
   // Solution code here...
+  let vowels = 'aeiou';
+  let arr = [];
+  let arr2 = [];
+  let temp = "";
+  let str2 = [];
+  let result = [];
+
+  str = str.split("");
+
+  while (str.length > 0){
+    if (vowels.includes(str[0])){
+      temp = str.shift();
+      arr2.push(temp);
+    }
+    else{
+      temp = str.shift();
+      arr.push(temp);
+    }
+  }
+
+  for (let i = arr.length-1; i >= 0; i--){
+    str.unshift(arr[i]);
+  }
+  for (let i = arr2.length-1; i >= 0; i--){
+    str2.unshift(arr2[i]);
+  }
+
+  str = str.join("");
+  str2 = str2.sort();
+  str2 = str2.join("");
+  
+  result.push(str, str2);
+  return result;
 };
 
 /* ------------------------------------------------------------------------------------------------
