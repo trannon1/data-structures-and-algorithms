@@ -14,6 +14,9 @@ const courseInfo = { name: 'Code 301', duration: { dayTrack: '4 weeks', eveningT
 
 const getCourseKeys = (obj) => {
   // Solution code here...
+  let arr = [];
+  arr = Object.keys(obj);
+  return arr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -71,6 +74,9 @@ let characters = [
 const getHouses = (arr) => {
   let houses = [];
   // Solution code here...
+  arr.forEach(person => {
+      houses.push(person['house']);
+  });
   return houses;
 };
 
@@ -88,7 +94,18 @@ hasChildrenValues(characters, 'Sansa') will return false
 
 const hasChildrenValues = (arr, character) => {
   // Solution code here...
-
+  let arr2 = [];
+  arr.forEach(person => {
+      if(person['name'] === character){
+          arr2 = Object.values(person['children']);
+      }
+  })
+  if (arr2.length > 0){
+      return true;
+  }
+  else{
+      return false;
+  }
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -101,6 +118,27 @@ The input and output of this function are the same as the input and output from 
 
 const hasChildrenEntries = (arr, character) => {
   // Solution code here...
+  let arr2 = [];
+  let x = 0;
+  arr.forEach(person => {
+    if(person['name'] === character){
+        arr2 = Object.entries(person);
+    }
+  })
+  arr2.forEach(attribute =>{
+      if (attribute[0] === 'children'){
+          if (attribute[1].length > 0){
+              x = 1;
+          }
+      }
+  })
+
+  if (x > 0){
+      return true;
+  }
+  else{
+      return false;
+  }
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -111,6 +149,24 @@ Write a function named totalCharacters that takes in an array and returns the nu
 
 const totalCharacters = (arr) => {
   // Solution code here...
+  let children = [];
+  let spouse = [];
+  let totalNum = arr.length;
+  arr.forEach(person => {
+    children.push(person['children']);
+    spouse.push(person['spouse']);
+  })
+   children.forEach(numChild =>{
+     if (numChild != null){
+      totalNum = totalNum + numChild.length;
+     }
+  })
+  spouse.forEach(name =>{
+    if (name != null){
+      totalNum = totalNum + 1;
+    }
+  })
+  return totalNum;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -126,6 +182,23 @@ For example: [{ house: 'Stark', members: 7 }, { house: 'Arryn', members: 3 }, ..
 const houseSize = (arr) => {
   const sizes = [];
   // Solution code here...
+  let num = 0;
+
+  arr.forEach(person => {
+    let myObject = {
+      house:  '',
+      members: 0
+    };
+    num = 1;
+    num = num + person['children'].length;
+    if (person['spouse'] != null){
+      num = num + 1;
+    }
+    myObject.members = num;
+    myObject.house = person['house'];
+    sizes.push(myObject);
+  })
+
   return sizes;
 };
 
@@ -150,6 +223,22 @@ const deceasedSpouses = ['Catelyn', 'Lysa', 'Robert', 'Khal Drogo', 'Alerie'];
 const houseSurvivors = (arr) => {
   const survivors = [];
   // Solution code here...
+  let num = 0;
+
+  arr.forEach(person => {
+    let myObject = {
+      house:  '',
+      members: 0
+    };
+    num = 1;
+    num = num + person['children'].length;
+    if ((person['spouse'] != null) && (!deceasedSpouses.includes(person['spouse']))){
+      num = num + 1;
+    }
+    myObject.members = num;
+    myObject.house = person['house'];
+    survivors.push(myObject);
+  })
   return survivors;
 };
 
